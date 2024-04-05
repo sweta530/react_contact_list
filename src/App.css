@@ -1,38 +1,55 @@
-.App {
-  text-align: center;
+
+
+*{
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.contact-container {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+.contact-listing {
+  width: 60%;
+}
+.contact-details {
+  width: 40%;
+  border: 2px solid black;
+}
+.flex-div {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  margin: 20px 10px;
+}
+.search-input {
+  width: 40%;
+  border-radius: 5px;
+  border-width: 1px;
+  padding: 10px;
+  padding-left: 25px;
+  background: url("https://static.thenounproject.com/png/101791-200.png") no-repeat left;
+  background-size: 20px;
+  background-color: rgb(230, 230, 230);
+
+}
+.contact-list-table {
+  width: 98%;
+  margin: 20px 10px;
+}
+.contact-form {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  gap: 5px;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.contact-form input {
+  padding: 5px;
+  border-radius: 5px;
+  border-width: 1px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.contact-form span {
+  color: red;
 }

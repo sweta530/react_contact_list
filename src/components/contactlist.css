@@ -1,0 +1,66 @@
+/* CSS */
+.table-container {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 25px;
+  }
+
+  tr {
+    height: 80px;
+  }
+  
+  th,
+  td {
+    padding: 4px;
+    text-align: left;
+    font-size: larger;
+  }
+
+  th {
+    background-color: rgb(230, 230, 230);
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+    th, td {
+      display: block;
+    }
+    
+    th {
+      text-align: center;
+    }
+    
+    td {
+      text-align: left;
+    }
+    
+    /* td:first-child {
+      display: none;   Hide the first cell (checkbox) in smaller screens 
+    } */
+  }
+
+  .basic-info-container {
+    display: flex;
+    flex-direction: row;
+   align-items: center;
+    gap: 10px;
+  }
+
+  .basic-info-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .basic-info-text h5 {
+      margin: 0;
+      font-weight: 100;
+  }
+
+  .basic-info-text h4 {
+    margin: 0;
+  }
