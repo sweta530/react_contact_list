@@ -5,7 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AddContact({ open, onClose }) {
+
+export default function AddContact({ open, id, onClose }) {
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
@@ -18,8 +19,20 @@ export default function AddContact({ open, onClose }) {
     const [formError, setFormError] = useState("");
 
     useEffect(() => {
-        clearForm();
+        getContact();
     }, []);
+
+    async function getContact() {
+        try {
+            if (id) {
+                let result = await fetch("http://localhost:5000/api/contact/" + id);
+                result = await result.json();
+                setFormData(result.data[0]);
+            }
+        } catch (error) {
+            console.log("Error fetching contacts:", error);
+        }
+    }
 
     function clearForm() {
         setFormError("");
@@ -84,8 +97,8 @@ export default function AddContact({ open, onClose }) {
                 formDataToSend.append(key, trimmedFormData[key]);
             }
 
-            const response = await fetch('http://localhost:5000/api/contact', {
-                method: 'POST',
+            const response = await fetch('http://localhost:5000/api/contact/' + id, {
+                method: 'PUT',
                 body: formDataToSend
             });
 
@@ -93,7 +106,7 @@ export default function AddContact({ open, onClose }) {
                 throw new Error('Failed to add contact');
             }
 
-            console.log('Contact added successfully', response);
+            console.log('Contact Updated successfully', response);
             clearForm();
             onClose();
         } catch (error) {
