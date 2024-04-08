@@ -6,9 +6,8 @@
 
 .contact-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 20px;
+  flex-direction: column;
+
 }
 .contact-listing {
   width: 60%;
@@ -17,11 +16,18 @@
   width: 40%;
   margin-top: 150px;  
 }
-.flex-div {
+.contact-header-container {
   display: flex;
   gap: 10px;
   flex-direction: row;
-  margin: 20px 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin:10px;
+}
+.contact-header {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
 }
 .search-input {
   width: 40%;
@@ -35,8 +41,7 @@
 
 }
 .contact-list-table {
-  width: 98%;
-  margin: 20px 10px;
+  margin: 10px;
 }
 .contact-form {
   width: 80%;

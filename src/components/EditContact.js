@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function AddContact({ open, id, onClose }) {
+export default function EditContact({ open, id, onClose }) {
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",

@@ -5,33 +5,41 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AddContact({ open, onClose }) {
-    const [formData, setFormData] = useState({
+export default function AddOrEditContact({ open, onClose, id }) {
+    const contactInitialData = {
         first_name: "",
         last_name: "",
         phone: "",
         email: "",
         company: "",
         address: "",
-        profile_image: null // Initialize profileImage as null
-    });
+        profile_image: null
+    }
+    const [formData, setFormData] = useState(contactInitialData);
     const [formError, setFormError] = useState("");
+    const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
-        clearForm();
+        if (id !== "") {
+            setIsEdit(true);
+            getContact();
+        }
     }, []);
 
     function clearForm() {
         setFormError("");
-        setFormData({
-            first_name: "",
-            last_name: "",
-            phone: "",
-            email: "",
-            company: "",
-            address: "",
-            profile_image: null
-        });
+        setFormData(contactInitialData);
+    }
+
+    async function getContact() {
+        console.log(id, 5555);
+        try {
+            let result = await fetch("http://localhost:5000/api/contact/" + id);
+            result = await result.json();
+            setFormData(result.data[0]);
+        } catch (error) {
+            console.log("Error fetching contacts:", error);
+        }
     }
 
     const handleChange = (event) => {
@@ -84,16 +92,23 @@ export default function AddContact({ open, onClose }) {
                 formDataToSend.append(key, trimmedFormData[key]);
             }
 
-            const response = await fetch('http://localhost:5000/api/contact', {
-                method: 'POST',
-                body: formDataToSend
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to add contact');
+            if (isEdit) {
+                const response = await fetch('http://localhost:5000/api/contact/' + id, {
+                    method: 'PUT',
+                    body: formDataToSend
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to Edit contact');
+                }
+            } else {
+                const response = await fetch('http://localhost:5000/api/contact', {
+                    method: 'POST',
+                    body: formDataToSend
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to add contact');
+                }
             }
-
-            console.log('Contact added successfully', response);
             clearForm();
             onClose();
         } catch (error) {

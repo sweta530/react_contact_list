@@ -17,7 +17,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import MainContent from './MainContent';
+import ContactList from './ContactList';
 
 const drawerWidth = 240;
 
@@ -177,7 +177,7 @@ export default function Home() {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
 
-                <MainContent />
+                <ContactList />
             </Box>
         </Box>
     );

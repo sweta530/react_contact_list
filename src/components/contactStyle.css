@@ -7,10 +7,6 @@
     margin-top: 25px;
   }
 
-  .table-container tr {
-    height: 80px;
-  }
-
   .table-container tr:hover {
     cursor: pointer;
     background-color: rgb(230, 230, 230); 
@@ -18,38 +14,34 @@
   
   .table-container th,
   .table-container td {
-    padding: 4px;
+    padding: 10px;
     text-align: left;
     font-size: larger;
   }
 
   .table-container th {
     background-color: rgb(230, 230, 230);
+    height: 60px;
   }
   
   /* Responsive styles */
   @media screen and (max-width: 600px) {
-    .table-container th, td {
+    /* .table-container th, td {
       display: block;
-    }
+    } */
     
     .table-container th {
-      text-align: center;
     }
     
     .table-container td {
       text-align: left;
     }
-    
-    /* td:first-child {
-      display: none;   Hide the first cell (checkbox) in smaller screens 
-    } */
   }
 
   .basic-info-container {
     display: flex;
     flex-direction: row;
-   align-items: center;
+    align-items: center;
     gap: 10px;
   }
 
@@ -91,12 +83,12 @@
 
   .contact-detail-container .main-content {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
   }
   .contact_detail-table {
     width: 100%;
     padding-left: 40px;
   }
   .contact_detail-table td {
-    padding: 10px;
+    padding: 5px;
   }
