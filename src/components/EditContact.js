@@ -25,7 +25,7 @@ export default function EditContact({ open, id, onClose }) {
     async function getContact() {
         try {
             if (id) {
-                let result = await fetch("http://localhost:5000/api/contact/" + id);
+                let result = await fetch(`${process.env.REACT_APP_BASE_URL}contact/` + id);
                 result = await result.json();
                 setFormData(result.data[0]);
             }

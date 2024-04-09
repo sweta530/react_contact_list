@@ -105,7 +105,7 @@ export default function ContactList() {
 
     async function getAllContacts() {
         try {
-            let result = await fetch("http://localhost:5000/api/contact");
+            let result = await fetch(`${process.env.REACT_APP_BASE_URL}contact`);
             result = await result.json();
             setContacts(result.data);
         } catch (error) {
@@ -115,7 +115,7 @@ export default function ContactList() {
 
     async function deleteContact(id) {
         try {
-            let result = await fetch("http://localhost:5000/api/contact/" + id,
+            let result = await fetch(`${process.env.REACT_APP_BASE_URL}contact/` + id,
                 {
                     method: 'DELETE',
                 })

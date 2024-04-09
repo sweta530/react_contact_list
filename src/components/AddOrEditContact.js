@@ -34,7 +34,7 @@ export default function AddOrEditContact({ open, onClose, id }) {
 
     async function getContact() {
         try {
-            let result = await fetch("http://localhost:5000/api/contact/" + id);
+            let result = await fetch(`${process.env.REACT_APP_BASE_URL}contact/` + id);
             result = await result.json();
             setFormData(result.data[0]);
         } catch (error) {
@@ -94,21 +94,25 @@ export default function AddOrEditContact({ open, onClose, id }) {
                 if (typeof formDataToSend.get("profile_image") === 'string') {
                     formDataToSend.delete("profile_image")
                 }
-                const response = await fetch('http://localhost:5000/api/contact/' + id, {
+                let result = await fetch('http://localhost:5000/api/contact/' + id, {
                     method: 'PUT',
                     body: formDataToSend
                 });
-                if (!response.ok) {
+                if (!result.ok) {
                     throw new Error('Failed to Edit contact');
                 }
+                result = await result.json();
+                console.log("contact Edited successfully", result);
             } else {
-                const response = await fetch('http://localhost:5000/api/contact', {
+                let result = await fetch('http://localhost:5000/api/contact', {
                     method: 'POST',
                     body: formDataToSend
                 });
-                if (!response.ok) {
+                if (!result.ok) {
                     throw new Error('Failed to Add contact');
                 }
+                result = await result.json();
+                console.log("contact Added successfully", result);
             }
             clearForm();
             onClose();
