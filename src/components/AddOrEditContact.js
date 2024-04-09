@@ -4,6 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Avatar } from '@mui/material';
 
 export default function AddOrEditContact({ open, onClose, id }) {
     const contactInitialData = {
@@ -32,7 +33,6 @@ export default function AddOrEditContact({ open, onClose, id }) {
     }
 
     async function getContact() {
-        console.log(id, 5555);
         try {
             let result = await fetch("http://localhost:5000/api/contact/" + id);
             result = await result.json();
@@ -45,11 +45,12 @@ export default function AddOrEditContact({ open, onClose, id }) {
     const handleChange = (event) => {
         const { name, value, files } = event.target;
         if (name === "profileImage") {
-            // If it's a file input, use files[0] as the value
-            setFormData(prevState => ({
-                ...prevState,
-                profile_image: files[0]
-            }));
+            if (files.length > 0) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    profile_image: files[0]
+                }));
+            }
         } else {
             setFormData(prevState => ({
                 ...prevState,
@@ -73,15 +74,12 @@ export default function AddOrEditContact({ open, onClose, id }) {
         }
     };
 
-
     const addContact = async (event) => {
         event.preventDefault();
 
         try {
-            // Trim all data before sending to the API
             const trimmedFormData = {};
             for (let key in formData) {
-                // If it's a string, trim it; otherwise, keep the original value
                 trimmedFormData[key] = typeof formData[key] === 'string' ? formData[key].trim() : formData[key];
             }
 
@@ -93,6 +91,9 @@ export default function AddOrEditContact({ open, onClose, id }) {
             }
 
             if (isEdit) {
+                if (typeof formDataToSend.get("profile_image") === 'string') {
+                    formDataToSend.delete("profile_image")
+                }
                 const response = await fetch('http://localhost:5000/api/contact/' + id, {
                     method: 'PUT',
                     body: formDataToSend
@@ -106,7 +107,7 @@ export default function AddOrEditContact({ open, onClose, id }) {
                     body: formDataToSend
                 });
                 if (!response.ok) {
-                    throw new Error('Failed to add contact');
+                    throw new Error('Failed to Add contact');
                 }
             }
             clearForm();
@@ -115,7 +116,6 @@ export default function AddOrEditContact({ open, onClose, id }) {
             setFormError(error.message);
         }
     };
-
 
     return (
         <>
@@ -152,7 +152,19 @@ export default function AddOrEditContact({ open, onClose, id }) {
                     </div>
                     <div className='contact-form'>
                         <label>Profile Image</label>
-                        <input type='file' accept="image/*" name="profileImage" onChange={handleChange} />
+                        <div style={{ display: "flex" }}>
+                            <input type='file' accept="image/*" name="profileImage" onChange={handleChange} />
+                            {(formData.profile_image && typeof formData.profile_image === 'string') && (
+                                <Avatar alt={formData.first_name}
+                                    src={formData.profile_image}
+                                    sx={{ width: 48, height: 48 }} />
+                            )}
+                            {(formData.profile_image && typeof formData.profile_image !== 'string') && (
+                                <Avatar alt={formData.first_name}
+                                    src={URL.createObjectURL(formData.profile_image)}
+                                    sx={{ width: 48, height: 48 }} />
+                            )}
+                        </div>
                     </div>
                     <div className='contact-form'>
                         <span>{formError}</span>
@@ -160,7 +172,7 @@ export default function AddOrEditContact({ open, onClose, id }) {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={addContact} type='submit'>Add Contact</Button>
+                    <Button variant='contained' onClick={addContact} type='submit'>Submit</Button>
                 </DialogActions>
             </Dialog>
         </>

@@ -65,7 +65,7 @@ export default function ContactList() {
             setSelectedContacts(prevSelected => [...prevSelected, contactId]);
         } else {
             setSelectedContacts(prevSelected => prevSelected.filter(id => id !== contactId));
-            setSelectAll(false); // If any individual checkbox is unchecked, uncheck the master checkbox
+            setSelectAll(false);
         }
     };
 
@@ -78,14 +78,14 @@ export default function ContactList() {
             setSelectedContacts([]);
         }
     };
-    // Function to handle deleting selected contacts
+
     const handleDeleteSelected = async () => {
         try {
             await Promise.all(selectedContacts.map(async id => {
                 await deleteContact(id);
             }));
             setSelectedContacts([]);
-            setSelectAll(false); // Reset master checkbox
+            setSelectAll(false);
         } catch (error) {
             console.error("Error deleting contacts:", error);
         }
@@ -135,7 +135,7 @@ export default function ContactList() {
                         <PermContactCalendarIcon color="primary" sx={{ fontSize: 46 }} />
                         <h1 style={{ margin: 0 }}>Contacts</h1>
                     </div>
-                    <Button variant='contained' onClick={handleAddDialog}>Add Contact</Button>
+                    <Button variant='contained' onClick={handleAddDialog} >Add Contact</Button>
                 </div>
 
                 <input type='text' placeholder='Search' className='search-input icon'
@@ -146,12 +146,14 @@ export default function ContactList() {
                         <thead>
                             <tr>
                                 <th>
-                                    <input type='checkbox' style={{ width: "20px", height: "20px" }}
+                                    <input type='checkbox'
+                                        style={{ width: "20px", height: "20px", marginTop: "10px" }}
                                         onChange={handleMasterCheckboxChange}
                                         checked={selectAll} />
                                     {(selectedContacts.length === 0) ? null :
-                                        <IconButton aria-label="delete" onClick={handleDeleteSelected}
-                                            sx={{ width: 20, height: 20 }} >
+                                        <IconButton aria-label="delete"
+                                            onClick={handleDeleteSelected}
+                                            sx={{ width: 20, height: 20, padding: 0, marginBottom: 1 }} >
                                             <DeleteIcon />
                                         </IconButton>
                                     }
@@ -177,9 +179,15 @@ export default function ContactList() {
                                         <div className='basic-info-container'>
                                             {
                                                 contact.profile_image ?
-                                                    <Avatar alt={contact.first_name} src={contact.profile_image} sx={{ width: 48, height: 48 }} />
+                                                    <Avatar alt={contact.first_name}
+                                                        src={contact.profile_image}
+                                                        sx={{ width: 48, height: 48 }} />
                                                     :
-                                                    <Avatar sx={{ bgcolor: deepPurple[500], width: 48, height: 48 }}>{contact.first_name[0]}{contact.last_name ? contact.last_name[0] : null}</Avatar>
+                                                    <Avatar
+                                                        sx={{ bgcolor: deepPurple[500], width: 48, height: 48 }}>
+                                                        {contact.first_name[0]}
+                                                        {contact.last_name ? contact.last_name[0] : null}
+                                                    </Avatar>
                                             }
                                             <div className='basic-info-text'>
                                                 <h4>{contact.first_name + " " + contact.last_name}</h4>
@@ -190,13 +198,16 @@ export default function ContactList() {
                                     <td>{contact.phone}</td>
                                     <td>{contact.company}</td>
                                     <td>
-                                        <IconButton aria-label="Info" onClick={() => handleInfoDialog(contact)}>
+                                        <IconButton aria-label="Info"
+                                            onClick={() => handleInfoDialog(contact)}>
                                             <InfoIcon />
                                         </IconButton>
-                                        <IconButton aria-label="Edit" onClick={() => handleEditDialog(contact._id)}>
+                                        <IconButton aria-label="Edit"
+                                            onClick={() => handleEditDialog(contact._id)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton aria-label="delete" onClick={() => deleteContact(contact._id)}>
+                                        <IconButton aria-label="delete"
+                                            onClick={() => deleteContact(contact._id)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </td>
