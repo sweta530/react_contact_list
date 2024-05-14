@@ -56,7 +56,7 @@ export default function ContactDetails({ open, onClose, contact }) {
                                     </tr>
                                     <tr>
                                         <td>Address</td>
-                                        <td>{contact.address}</td>
+                                        <td>{contact.address ? contact.address : "Not Available"}</td>
                                     </tr>
                                 </tbody>
                             </table>
